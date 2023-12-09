@@ -66,6 +66,28 @@ public class NumberSet {
         }
     }
 
+    public int getDigit(int index) {
+        return this.digits.get(index);
+    }
+
+    public boolean isStrike(int digit, int index) {
+        return this.digits.get(index) == digit;
+    }
+
+    public boolean isBall(int digit, int index) {
+        int sizeOfDigits = size();
+        for (int i = index + 1; i < index + sizeOfDigits; i++) {
+            if (this.digits.get(i % sizeOfDigits) == digit) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int size() {
+        return this.digits.size();
+    }
+
     @Override
     public String toString() {
         return this.digits
