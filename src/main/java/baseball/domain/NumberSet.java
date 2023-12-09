@@ -27,6 +27,11 @@ public class NumberSet {
         this.digits = Collections.unmodifiableList(wrapper);
     }
 
+    public NumberSet(List<Integer> digits) {
+        this.digits = digits;
+        validate();
+    }
+
     private void validate() {
         NumberSetValidator.validateSize(this.digits);
         NumberSetValidator.validateEachDigitRange(this.digits);
