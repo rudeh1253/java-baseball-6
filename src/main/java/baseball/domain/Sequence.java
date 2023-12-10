@@ -8,18 +8,19 @@ import java.util.List;
 public class Sequence {
     private final List<String> container;
 
-    public Sequence(List<String> container, CharacterSet characterSet) {
+    public Sequence(List<String> container, GameConfig gameConfig) {
         this.container = Collections.unmodifiableList(container);
-        validate(characterSet);
+        validate(gameConfig);
     }
 
-    private void validate(CharacterSet characterSet) {
-        SequenceValidator.validateCharacterDomain(this.container, characterSet);
+    private void validate(GameConfig gameConfig) {
+        SequenceValidator.validateCharacterDomain(this.container, gameConfig);
     }
 
     private static class SequenceValidator {
 
-        public static <E> void validateCharacterDomain(List<String> container, CharacterSet characterSet) {
+        public static <E> void validateCharacterDomain(List<String> container, GameConfig gameConfig) {
+            CharacterSet characterSet = CharacterSet.of(gameConfig.gameMode());
             for (String element : container) {
                 if (!characterSet.contains(element)) {
                     throw new IllegalArgumentException(); // TODO: insert error message
