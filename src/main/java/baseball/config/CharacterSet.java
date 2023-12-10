@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CharacterSet {
-    private final Set<Object> container;
+    private final Set<String> container;
 
-    private CharacterSet(Set<Object> container) {
+    private CharacterSet(Set<String> container) {
         this.container = container;
     }
 
@@ -17,23 +17,23 @@ public class CharacterSet {
         return new CharacterSet(getAlphabetSet());
     }
 
-    private static Set<Object> getNumberSet() {
-        return generateContainer(1, 9);
+    private static Set<String> getNumberSet() {
+        return generateContainer('1', '9');
     }
 
-    private static Set<Object> getAlphabetSet() {
+    private static Set<String> getAlphabetSet() {
         return generateContainer('a', 'z');
     }
 
-    private static Set<Object> generateContainer(int from, int to) {
-        Set<Object> container = new HashSet<>();
-        for (int element = from; element <= to; element++) {
-            container.add(element);
+    private static Set<String> generateContainer(char from, int to) {
+        Set<String> container = new HashSet<>();
+        for (char element = from; element <= to; element++) {
+            container.add(String.valueOf(element));
         }
         return container;
     }
 
-    public boolean contains(Object element) {
+    public boolean contains(String element) {
         return this.container.contains(element);
     }
 }
