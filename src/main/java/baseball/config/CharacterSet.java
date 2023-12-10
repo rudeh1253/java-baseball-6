@@ -10,11 +10,19 @@ public class CharacterSet {
         this.container = container;
     }
 
+    private static final CharacterSet NUMBER_SET;
+    private static final CharacterSet ALPHABET_SET;
+
+    static {
+        NUMBER_SET = new CharacterSet(getNumberSet());
+        ALPHABET_SET = new CharacterSet(getAlphabetSet());
+    }
+
     public static CharacterSet of(GameMode gameMode) {
         if (gameMode == GameMode.MODE_NUMBER) {
-            return new CharacterSet(getNumberSet());
+            return NUMBER_SET;
         }
-        return new CharacterSet(getAlphabetSet());
+        return ALPHABET_SET;
     }
 
     private static Set<String> getNumberSet() {
