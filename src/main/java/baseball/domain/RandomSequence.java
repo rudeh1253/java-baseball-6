@@ -5,13 +5,13 @@ import baseball.config.CharacterSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RandomSequence extends Sequence {
+public class RandomSequence<E extends String> extends Sequence<E> {
 
-    private RandomSequence(List<String> container, GameConfig gameConfig) {
+    private RandomSequence(List<E> container, GameConfig gameConfig) {
         super(container, gameConfig);
     }
 
-    public static Sequence genereateRandomSequence(GameConfig gameConfig) {
+    public static Sequence<String> genereateRandomSequence(GameConfig gameConfig) {
         CharacterSet characterSet = CharacterSet.of(gameConfig.gameMode());
         int length = gameConfig.length();
         List<String> container = new ArrayList<>();
@@ -21,6 +21,6 @@ public class RandomSequence extends Sequence {
                 container.add(randomCharacter);
             }
         }
-        return new Sequence(container, gameConfig);
+        return new Sequence<>(container, gameConfig);
     }
 }

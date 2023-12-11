@@ -53,7 +53,7 @@ class SequenceTest {
     @ParameterizedTest
     void constructor_withException_containerElementDoesNotMatchGameMode(TestCaseWrapperForConstructor testCase) {
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Sequence(testCase.container(), testCase.gameConfig()));
+                .isThrownBy(() -> new Sequence<>(testCase.container(), testCase.gameConfig()));
     }
 
     static Stream<TestCaseWrapperForConstructor> constructor_withoutException() {
@@ -67,7 +67,7 @@ class SequenceTest {
     @MethodSource
     @ParameterizedTest
     void constructor_withoutException(TestCaseWrapperForConstructor testCase) {
-        assertThatNoException().isThrownBy(() -> new Sequence(testCase.container(), testCase.gameConfig()));
+        assertThatNoException().isThrownBy(() -> new Sequence<>(testCase.container(), testCase.gameConfig()));
     }
 
     record TestCaseWrapperForBallAndStrike(TestCaseWrapperForConstructor wrapper,
@@ -116,7 +116,7 @@ class SequenceTest {
     @MethodSource
     @ParameterizedTest
     void isStrike(TestCaseWrapperForBallAndStrike testCase) {
-        Sequence testObject = getTestObject(testCase);
+        Sequence<String> testObject = getTestObject(testCase);
         List<String> testCases = testCase.testCase();
         boolean[] expected = testCase.expected();
         for (int i = 0; i < testCases.size(); i++) {
@@ -181,7 +181,7 @@ class SequenceTest {
     @MethodSource
     @ParameterizedTest
     void isBall(TestCaseWrapperForBallAndStrike testCase) {
-        Sequence testObject = getTestObject(testCase);
+        Sequence<String> testObject = getTestObject(testCase);
         List<String> testCases = testCase.testCase();
         boolean[] expected = testCase.expected();
         for (int i = 0; i < testCases.size(); i++) {
@@ -189,16 +189,16 @@ class SequenceTest {
         }
     }
 
-    private static Sequence getTestObject(TestCaseWrapperForBallAndStrike testCase) {
+    private static Sequence<String> getTestObject(TestCaseWrapperForBallAndStrike testCase) {
         TestCaseWrapperForConstructor wrapperForInstantiating = testCase.wrapper();
-        return new Sequence(wrapperForInstantiating.container(), wrapperForInstantiating.gameConfig());
+        return new Sequence<>(wrapperForInstantiating.container(), wrapperForInstantiating.gameConfig());
     }
 
     @DisplayName("Test if iterator is correctly implemented.")
     @Test
     void iterator() {
         List<String> list = List.of("a", "b", "c", "d", "e");
-        Sequence testObject = new Sequence(list, new GameConfig(GameMode.MODE_ALPHABET, list.size()));
+        Sequence<String> testObject = new Sequence<>(list, new GameConfig(GameMode.MODE_ALPHABET, list.size()));
         int index = 0;
         for (String innerElement : testObject) {
             assertThat(innerElement).isEqualTo(list.get(index++));

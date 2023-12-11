@@ -7,10 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class Sequence implements Iterable<String> {
-    private final List<String> container;
+public class Sequence<E extends String> implements Iterable<E> {
+    private final List<E> container;
 
-    public Sequence(List<String> container, GameConfig gameConfig) {
+    public Sequence(List<E> container, GameConfig gameConfig) {
         this.container = Collections.unmodifiableList(container);
         validate(gameConfig);
     }
@@ -22,27 +22,27 @@ public class Sequence implements Iterable<String> {
 
     private static class SequenceValidator {
 
-        public static void validateCharacterDomain(List<String> container, GameConfig gameConfig) {
+        public static <E extends String> void validateCharacterDomain(List<E> container, GameConfig gameConfig) {
             CharacterSet characterSet = CharacterSet.of(gameConfig.gameMode());
-            for (String element : container) {
+            for (E element : container) {
                 if (!characterSet.contains(element)) {
                     throw new IllegalArgumentException(); // TODO: insert error message
                 }
             }
         }
 
-        public static void validateLengthOfSequence(List<String> container, GameConfig gameConfig) {
+        public static <E extends String> void validateLengthOfSequence(List<E> container, GameConfig gameConfig) {
             if (container.size() != gameConfig.length()) {
                 throw new IllegalArgumentException(); // TODO: insert error message
             }
         }
     }
 
-    public boolean isStrike(String character, int position) {
+    public boolean isStrike(E character, int position) {
         return this.container.get(position).equals(character);
     }
 
-    public boolean isBall(String character, int position) {
+    public boolean isBall(E character, int position) {
         int size = this.container.size();
         for (int i = position + 1; i < position + size; i++) {
             if (this.container.get(i % size).equals(character)) {
@@ -53,7 +53,7 @@ public class Sequence implements Iterable<String> {
     }
 
     @Override
-    public Iterator<String> iterator() {
+    public Iterator<E> iterator() {
         return new SequenceIterator<>(this.container);
     }
 
