@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GameRecorder {
     private int numOfTry;
-    private List<String> tryHistory;
+    private List<List<String>> tryHistory;
 
     public GameRecorder() {
         this.numOfTry = 0;
@@ -17,7 +17,7 @@ public class GameRecorder {
         this.numOfTry++;
     }
 
-    public void addTry(String oneTry) {
+    public void addTry(List<String> oneTry) {
         this.tryHistory.add(oneTry);
     }
 
@@ -25,7 +25,7 @@ public class GameRecorder {
         return this.numOfTry;
     }
 
-    public List<String> getTryHistory() {
+    public List<List<String>> getTryHistory() {
         return Collections.unmodifiableList(this.tryHistory);
     }
 }
