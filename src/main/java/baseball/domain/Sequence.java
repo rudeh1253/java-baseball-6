@@ -45,7 +45,7 @@ public class Sequence implements Iterable<String> {
     public boolean isBall(String character, int position) {
         int size = this.container.size();
         for (int i = position + 1; i < position + size; i++) {
-            if (this.container.get(i).equals(character)) {
+            if (this.container.get(i % size).equals(character)) {
                 return true;
             }
         }
