@@ -1,5 +1,7 @@
 package baseball.config;
 
+import camp.nextstep.edu.missionutils.Randoms;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,5 +45,10 @@ public class CharacterSet {
 
     public boolean contains(String element) {
         return this.container.contains(element);
+    }
+
+    public String getRandomCharacter() {
+        int randomIndex = Randoms.pickNumberInRange(0, this.container.size() - 1);
+        return this.container.stream().skip(randomIndex).findFirst().orElseThrow();
     }
 }
