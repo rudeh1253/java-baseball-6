@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class Sequence<E extends String> implements Iterable<E> {
-    private final List<E> container;
+public class Sequence<E extends String> implements Iterable<String> {
+    private final List<String> container;
 
     public Sequence(List<E> container, GameConfig gameConfig) {
         this.container = Collections.unmodifiableList(container);
@@ -38,11 +38,11 @@ public class Sequence<E extends String> implements Iterable<E> {
         }
     }
 
-    public boolean isStrike(E character, int position) {
+    public boolean isStrike(String character, int position) {
         return this.container.get(position).equals(character);
     }
 
-    public boolean isBall(E character, int position) {
+    public boolean isBall(String character, int position) {
         int size = this.container.size();
         for (int i = position + 1; i < position + size; i++) {
             if (this.container.get(i % size).equals(character)) {
@@ -53,15 +53,15 @@ public class Sequence<E extends String> implements Iterable<E> {
     }
 
     @Override
-    public Iterator<E> iterator() {
+    public Iterator<String> iterator() {
         return new SequenceIterator<>(this.container);
     }
 
-    private static class SequenceIterator<E> implements Iterator<E> {
-        private final List<E> toIterate;
+    private static class SequenceIterator<String> implements Iterator<String> {
+        private final List<String> toIterate;
         private int currentIndex = 0;
 
-        public SequenceIterator(List<E> sequence) {
+        public SequenceIterator(List<String> sequence) {
             this.toIterate = sequence;
         }
 
@@ -71,7 +71,7 @@ public class Sequence<E extends String> implements Iterable<E> {
         }
 
         @Override
-        public E next() {
+        public String next() {
             if (!hasNext()) {
                 throw new NoSuchElementException(); // TODO: add error message
             }
