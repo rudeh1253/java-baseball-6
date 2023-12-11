@@ -18,14 +18,30 @@ class SequenceTest {
 
     static Stream<TestCaseWrapperForConstructor> constructor_withException_containerElementDoesNotMatchGameMode() {
         return Stream.of(
-                new TestCaseWrapperForConstructor(List.of("1", "2", "a", "3"), new GameConfig(GameMode.MODE_NUMBER, 4)),
-                new TestCaseWrapperForConstructor(List.of("1", "b", "a", "3"), new GameConfig(GameMode.MODE_NUMBER, 4)),
-                new TestCaseWrapperForConstructor(List.of("c", "b", "a", "3"), new GameConfig(GameMode.MODE_NUMBER, 4)),
-                new TestCaseWrapperForConstructor(List.of("c", "b", "a", "d"), new GameConfig(GameMode.MODE_NUMBER, 4)),
-                new TestCaseWrapperForConstructor(List.of("1", "2", "a", "3"), new GameConfig(GameMode.MODE_ALPHABET, 4)),
-                new TestCaseWrapperForConstructor(List.of("1", "b", "a", "3"), new GameConfig(GameMode.MODE_ALPHABET, 4)),
-                new TestCaseWrapperForConstructor(List.of("c", "b", "a", "3"), new GameConfig(GameMode.MODE_ALPHABET, 4)),
-                new TestCaseWrapperForConstructor(List.of("1", "2", "3", "4"), new GameConfig(GameMode.MODE_ALPHABET, 4))
+                new TestCaseWrapperForConstructor(
+                        List.of("1", "2", "a", "3"), new GameConfig(GameMode.MODE_NUMBER, 4)
+                ),
+                new TestCaseWrapperForConstructor(
+                        List.of("1", "b", "a", "3"), new GameConfig(GameMode.MODE_NUMBER, 4)
+                ),
+                new TestCaseWrapperForConstructor(
+                        List.of("c", "b", "a", "3"), new GameConfig(GameMode.MODE_NUMBER, 4)
+                ),
+                new TestCaseWrapperForConstructor(
+                        List.of("c", "b", "a", "d"), new GameConfig(GameMode.MODE_NUMBER, 4)
+                ),
+                new TestCaseWrapperForConstructor(
+                        List.of("1", "2", "a", "3"), new GameConfig(GameMode.MODE_ALPHABET, 4)
+                ),
+                new TestCaseWrapperForConstructor(
+                        List.of("1", "b", "a", "3"), new GameConfig(GameMode.MODE_ALPHABET, 4)
+                ),
+                new TestCaseWrapperForConstructor(
+                        List.of("c", "b", "a", "3"), new GameConfig(GameMode.MODE_ALPHABET, 4)
+                ),
+                new TestCaseWrapperForConstructor(
+                        List.of("1", "2", "3", "4"), new GameConfig(GameMode.MODE_ALPHABET, 4)
+                )
         );
     }
 
