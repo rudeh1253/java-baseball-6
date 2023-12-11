@@ -1,10 +1,12 @@
 package baseball.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import baseball.config.GameMode;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -66,5 +68,16 @@ class SequenceTest {
     @ParameterizedTest
     void constructor_withoutException(TestCaseWrapperForConstructor testCase) {
         assertThatNoException().isThrownBy(() -> new Sequence(testCase.container(), testCase.gameConfig()));
+    }
+
+    @DisplayName("Test if iterator is correctly implemented.")
+    @Test
+    void iterator() {
+        List<String> list = List.of("a", "b", "c", "d", "e");
+        Sequence testObject = new Sequence(list, new GameConfig(GameMode.MODE_ALPHABET, list.size()));
+        int index = 0;
+        for (String innerElement : testObject) {
+            assertThat(innerElement).isEqualTo(list.get(index++));
+        }
     }
 }
