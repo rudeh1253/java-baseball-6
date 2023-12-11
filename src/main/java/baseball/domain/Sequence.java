@@ -52,6 +52,10 @@ public class Sequence<E extends String> implements Iterable<String> {
         return false;
     }
 
+    public void recordCurrentSequence(GameRecorder recorder) {
+        recorder.addTry(this.container);
+    }
+
     @Override
     public Iterator<String> iterator() {
         return new SequenceIterator<>(this.container);
