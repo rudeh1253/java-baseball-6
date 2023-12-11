@@ -70,6 +70,130 @@ class SequenceTest {
         assertThatNoException().isThrownBy(() -> new Sequence(testCase.container(), testCase.gameConfig()));
     }
 
+    record TestCaseWrapperForBallAndStrike(TestCaseWrapperForConstructor wrapper,
+                                           List<String> testCase,
+                                           boolean[] expected) {
+    }
+
+    static Stream<TestCaseWrapperForBallAndStrike> isStrike() {
+        return Stream.of(
+                new TestCaseWrapperForBallAndStrike(
+                        new TestCaseWrapperForConstructor(
+                                List.of("1", "2", "3", "4", "5"),
+                                new GameConfig(GameMode.MODE_NUMBER, 5)
+                        ),
+                        List.of("1", "2", "3", "4", "5"),
+                        new boolean[] { true, true, true, true, true }
+                ),
+                new TestCaseWrapperForBallAndStrike(
+                        new TestCaseWrapperForConstructor(
+                                List.of("1", "2", "3", "4", "6"),
+                                new GameConfig(GameMode.MODE_NUMBER, 5)
+                        ),
+                        List.of("1", "2", "3", "4", "5"),
+                        new boolean[] { true, true, true, true, false }
+                ),
+                new TestCaseWrapperForBallAndStrike(
+                        new TestCaseWrapperForConstructor(
+                                List.of("1", "2", "3", "4", "5"),
+                                new GameConfig(GameMode.MODE_NUMBER, 5)
+                        ),
+                        List.of("5", "4", "3", "2", "1"),
+                        new boolean[] { false, false, true, false, false }
+                ),
+                new TestCaseWrapperForBallAndStrike(
+                        new TestCaseWrapperForConstructor(
+                                List.of("1", "2", "3", "4", "5"),
+                                new GameConfig(GameMode.MODE_NUMBER, 5)
+                        ),
+                        List.of("5", "1", "2", "3", "4"),
+                        new boolean[] { false, false, false, false, false }
+                )
+        );
+    }
+
+    @DisplayName("Test isStrike method")
+    @MethodSource
+    @ParameterizedTest
+    void isStrike(TestCaseWrapperForBallAndStrike testCase) {
+        Sequence testObject = getTestObject(testCase);
+        List<String> testCases = testCase.testCase();
+        boolean[] expected = testCase.expected();
+        for (int i = 0; i < testCases.size(); i++) {
+            assertThat(testObject.isStrike(testCases.get(i), i)).isEqualTo(expected[i]);
+        }
+    }
+
+    static Stream<TestCaseWrapperForBallAndStrike> isBall() {
+        return Stream.of(
+                new TestCaseWrapperForBallAndStrike(
+                        new TestCaseWrapperForConstructor(
+                                List.of("1", "2", "3", "4", "5"),
+                                new GameConfig(GameMode.MODE_NUMBER, 5)
+                        ),
+                        List.of("1", "2", "3", "4", "5"),
+                        new boolean[] { false, false, false, false, false }
+                ),
+                new TestCaseWrapperForBallAndStrike(
+                        new TestCaseWrapperForConstructor(
+                                List.of("1", "2", "3", "4", "5"),
+                                new GameConfig(GameMode.MODE_NUMBER, 5)
+                        ),
+                        List.of("1", "2", "3", "5", "4"),
+                        new boolean[] { false, false, false, true, true }
+                ),
+                new TestCaseWrapperForBallAndStrike(
+                        new TestCaseWrapperForConstructor(
+                                List.of("1", "2", "3", "4", "5"),
+                                new GameConfig(GameMode.MODE_NUMBER, 5)
+                        ),
+                        List.of("5", "4", "3", "2", "1"),
+                        new boolean[] { true, true, false, true, true }
+                ),
+                new TestCaseWrapperForBallAndStrike(
+                        new TestCaseWrapperForConstructor(
+                                List.of("1", "2", "3", "4", "5"),
+                                new GameConfig(GameMode.MODE_NUMBER, 5)
+                        ),
+                        List.of("5", "1", "2", "3", "4"),
+                        new boolean[] { true, true, true, true, true }
+                ),
+                new TestCaseWrapperForBallAndStrike(
+                        new TestCaseWrapperForConstructor(
+                                List.of("1", "2", "3", "4", "5"),
+                                new GameConfig(GameMode.MODE_NUMBER, 5)
+                        ),
+                        List.of("6", "7", "8", "9", "1"),
+                        new boolean[] { false, false, false, false, true }
+                ),
+                new TestCaseWrapperForBallAndStrike(
+                        new TestCaseWrapperForConstructor(
+                                List.of("1", "2", "3", "4", "5"),
+                                new GameConfig(GameMode.MODE_NUMBER, 5)
+                        ),
+                        List.of("7", "1", "2", "3", "8"),
+                        new boolean[] { false, true, true, true, false }
+                )
+        );
+    }
+
+    @DisplayName("Test isStrike method")
+    @MethodSource
+    @ParameterizedTest
+    void isBall(TestCaseWrapperForBallAndStrike testCase) {
+        Sequence testObject = getTestObject(testCase);
+        List<String> testCases = testCase.testCase();
+        boolean[] expected = testCase.expected();
+        for (int i = 0; i < testCases.size(); i++) {
+            assertThat(testObject.isBall(testCases.get(i), i)).isEqualTo(expected[i]);
+        }
+    }
+
+    private static Sequence getTestObject(TestCaseWrapperForBallAndStrike testCase) {
+        TestCaseWrapperForConstructor wrapperForInstantiating = testCase.wrapper();
+        return new Sequence(wrapperForInstantiating.container(), wrapperForInstantiating.gameConfig());
+    }
+
     @DisplayName("Test if iterator is correctly implemented.")
     @Test
     void iterator() {
