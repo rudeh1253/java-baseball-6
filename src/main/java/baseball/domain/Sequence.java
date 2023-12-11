@@ -15,16 +15,23 @@ public class Sequence {
 
     private void validate(GameConfig gameConfig) {
         SequenceValidator.validateCharacterDomain(this.container, gameConfig);
+        SequenceValidator.validateLengthOfSequence(this.container, gameConfig);
     }
 
     private static class SequenceValidator {
 
-        public static <E> void validateCharacterDomain(List<String> container, GameConfig gameConfig) {
+        public static void validateCharacterDomain(List<String> container, GameConfig gameConfig) {
             CharacterSet characterSet = CharacterSet.of(gameConfig.gameMode());
             for (String element : container) {
                 if (!characterSet.contains(element)) {
                     throw new IllegalArgumentException(); // TODO: insert error message
                 }
+            }
+        }
+
+        public static void validateLengthOfSequence(List<String> container, GameConfig gameConfig) {
+            if (container.size() != gameConfig.length()) {
+                throw new IllegalArgumentException(); // TODO: insert error message
             }
         }
     }
