@@ -13,19 +13,19 @@ import java.util.stream.Stream;
 
 class SequenceTest {
 
-    record TestCaseWrapper(List<String> container, GameConfig gameConfig) {
+    record TestCaseWrapperForConstructor(List<String> container, GameConfig gameConfig) {
     }
 
-    static Stream<TestCaseWrapper> constructor_withException_containerElementDoesNotMatchGameMode() {
+    static Stream<TestCaseWrapperForConstructor> constructor_withException_containerElementDoesNotMatchGameMode() {
         return Stream.of(
-                new TestCaseWrapper(List.of("1", "2", "a", "3"), new GameConfig(GameMode.MODE_NUMBER, 4)),
-                new TestCaseWrapper(List.of("1", "b", "a", "3"), new GameConfig(GameMode.MODE_NUMBER, 4)),
-                new TestCaseWrapper(List.of("c", "b", "a", "3"), new GameConfig(GameMode.MODE_NUMBER, 4)),
-                new TestCaseWrapper(List.of("c", "b", "a", "d"), new GameConfig(GameMode.MODE_NUMBER, 4)),
-                new TestCaseWrapper(List.of("1", "2", "a", "3"), new GameConfig(GameMode.MODE_ALPHABET, 4)),
-                new TestCaseWrapper(List.of("1", "b", "a", "3"), new GameConfig(GameMode.MODE_ALPHABET, 4)),
-                new TestCaseWrapper(List.of("c", "b", "a", "3"), new GameConfig(GameMode.MODE_ALPHABET, 4)),
-                new TestCaseWrapper(List.of("1", "2", "3", "4"), new GameConfig(GameMode.MODE_ALPHABET, 4))
+                new TestCaseWrapperForConstructor(List.of("1", "2", "a", "3"), new GameConfig(GameMode.MODE_NUMBER, 4)),
+                new TestCaseWrapperForConstructor(List.of("1", "b", "a", "3"), new GameConfig(GameMode.MODE_NUMBER, 4)),
+                new TestCaseWrapperForConstructor(List.of("c", "b", "a", "3"), new GameConfig(GameMode.MODE_NUMBER, 4)),
+                new TestCaseWrapperForConstructor(List.of("c", "b", "a", "d"), new GameConfig(GameMode.MODE_NUMBER, 4)),
+                new TestCaseWrapperForConstructor(List.of("1", "2", "a", "3"), new GameConfig(GameMode.MODE_ALPHABET, 4)),
+                new TestCaseWrapperForConstructor(List.of("1", "b", "a", "3"), new GameConfig(GameMode.MODE_ALPHABET, 4)),
+                new TestCaseWrapperForConstructor(List.of("c", "b", "a", "3"), new GameConfig(GameMode.MODE_ALPHABET, 4)),
+                new TestCaseWrapperForConstructor(List.of("1", "2", "3", "4"), new GameConfig(GameMode.MODE_ALPHABET, 4))
         );
     }
 
@@ -33,22 +33,22 @@ class SequenceTest {
             "IllegalArgumentException is thrown.")
     @MethodSource
     @ParameterizedTest
-    void constructor_withException_containerElementDoesNotMatchGameMode(TestCaseWrapper testCase) {
+    void constructor_withException_containerElementDoesNotMatchGameMode(TestCaseWrapperForConstructor testCase) {
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> new Sequence(testCase.container(), testCase.gameConfig()));
     }
 
-    static Stream<TestCaseWrapper> constructor_withoutException() {
+    static Stream<TestCaseWrapperForConstructor> constructor_withoutException() {
         return Stream.of(
-                new TestCaseWrapper(List.of("c", "b", "a", "d"), new GameConfig(GameMode.MODE_ALPHABET, 4)),
-                new TestCaseWrapper(List.of("1", "2", "3", "4"), new GameConfig(GameMode.MODE_NUMBER, 4))
+                new TestCaseWrapperForConstructor(List.of("c", "b", "a", "d"), new GameConfig(GameMode.MODE_ALPHABET, 4)),
+                new TestCaseWrapperForConstructor(List.of("1", "2", "3", "4"), new GameConfig(GameMode.MODE_NUMBER, 4))
         );
     }
 
     @DisplayName("Follows the specification. No exception is thrown.")
     @MethodSource
     @ParameterizedTest
-    void constructor_withoutException(TestCaseWrapper testCase) {
+    void constructor_withoutException(TestCaseWrapperForConstructor testCase) {
         assertThatNoException().isThrownBy(() -> new Sequence(testCase.container(), testCase.gameConfig()));
     }
 }
